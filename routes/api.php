@@ -15,9 +15,8 @@ use Illuminate\Http\Request;
 
 Route::resource('services', 'ServicesController');
 
-Route::get('/loginStatus', function() {
+Route::get('/me', function() {
   return [
-    'isLogged' => Auth::check(),
     'user' => Auth::user()
   ];
-});
+})->middleware('auth');

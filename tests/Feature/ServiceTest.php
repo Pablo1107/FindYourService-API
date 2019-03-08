@@ -157,31 +157,27 @@ class ServiceTest extends TestCase
     }
 
     /**
-     * Test if endpoint /loginStatus returns accurate data
+     * Test if endpoint /api/me returns accurate data
      *
      * @return void
      */
     public function test_login_status()
     {
         // Given guest
-        // When view hit /login status
-        $this->get('/api/loginStatus')
-            ->assertStatus(200)
-            ->assertJson([
-                'isLogged' => false,
-                'user' => null
-            ]);
-        // Then server returns user not logged
+        // When view hit /me status
+        $this->get('/me')
+            ->assertStatus(404);
+        // Then server returns status 404 unauthorized
         // Given an auth user
         $user = factory('App\User')->create();
         $this->actingAs($user);
         // When view hit /login status
-        $this->get('/api/loginStatus')
+        $this->get('/api/me')
             ->assertStatus(200)
             ->assertJsonFragment([
-                'isLogged' => true,
+                'email' => $user->email,
             ])
             ->assertSee(json_encode($user->toArray()));
-        // Then server returns user is logged and user name
+        // Then server returns user
     }
 }
