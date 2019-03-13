@@ -165,14 +165,14 @@ class ServiceTest extends TestCase
     {
         // Given guest
         // When view hit /me status
-        $this->get('/me')
-            ->assertStatus(404);
-        // Then server returns status 404 unauthorized
+        $this->json('get', '/api/me')
+            ->assertStatus(401);
+        // Then server returns status 401 unauthorized
         // Given an auth user
         $user = factory('App\User')->create();
         $this->actingAs($user);
         // When view hit /login status
-        $this->get('/api/me')
+        $this->json('get', '/api/me')
             ->assertStatus(200)
             ->assertJsonFragment([
                 'email' => $user->email,
