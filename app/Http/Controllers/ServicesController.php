@@ -71,7 +71,16 @@ class ServicesController extends Controller
      */
     public function update(Request $request, Service $service)
     {
-        $service->update(request(['title', 'description', 'address']));
+        $service->update(request([
+            'title',
+            'description',
+            'address',
+            'city',
+            'state',
+            'zipcode',
+            'longitude',
+            'latitude'
+        ]));
         return ['message' => 'Service Updated'];
     }
 
