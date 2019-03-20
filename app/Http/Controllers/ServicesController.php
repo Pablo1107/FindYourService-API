@@ -13,13 +13,19 @@ class ServicesController extends Controller
     }
 
     /**
-     * Return all existing Services.
+     * Return the requested Services
+     * or all if there was't a query.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $services = Service::all();
+        $query = Service::query();
+        if ($request->input('search')) {
+            $query->where('title', 'like', '%'.$request->input('search').'%');
+        }
+        $services = $query->get();
         return $services;
     }
 
