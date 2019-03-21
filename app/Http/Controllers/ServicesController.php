@@ -22,9 +22,19 @@ class ServicesController extends Controller
     public function index(Request $request)
     {
         $query = Service::query();
+
+        if ($request->input('lat') && $request->input('lng')) {
+            $location = (object) [
+                'latitude' => (float) $request->input('lat'),
+                'longitude' => (float) $request->input('lng'),
+            ];
+		    $query->isWithinMaxDistance($location);
+        }
+
         if ($request->input('search')) {
             $query->where('title', 'like', '%'.$request->input('search').'%');
         }
+
         $services = $query->get();
         return $services;
     }
