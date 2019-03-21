@@ -8,7 +8,7 @@ class Service extends Model
 {
     protected $guarded = [];
 
-	public function scopeIsWithinMaxDistance($query, $location, $radius = 25) {
+	public function scopeIsWithinMaxDistance($query, $location, $radius = 20036) {
 
 		$haversine = "(6371 * acos(cos(radians($location->latitude)) 
 			* cos(radians(latitude)) 

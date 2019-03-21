@@ -28,7 +28,11 @@ class ServicesController extends Controller
                 'latitude' => (float) $request->input('lat'),
                 'longitude' => (float) $request->input('lng'),
             ];
-		    $query->isWithinMaxDistance($location);
+            if ($request->input('radius')) {
+		        $query->isWithinMaxDistance($location, $request->input('radius'));
+            } else {
+		        $query->isWithinMaxDistance($location);
+            }
         }
 
         if ($request->input('search')) {
